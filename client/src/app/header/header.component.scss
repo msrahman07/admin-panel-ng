@@ -1,0 +1,23 @@
+nav {
+    height: 100%;
+    
+    .side-nav-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        padding: 100px;
+        cursor: pointer;
+        &:hover {
+            background-color: #efeaea51;
+            border-radius: 30%;
+            // padding: 0.5rem;
+
+            padding: 10px;
+        }
+    }
+    // .side-nav-button:hover {
+    //     background-color: #efeaea51;
+    //     border-radius: 30%;
+    // }
+}

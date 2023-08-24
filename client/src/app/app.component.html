@@ -1,0 +1,10 @@
+<app-header (sideNavToggled)="sideBarStatus = $event"></app-header>
+
+<main>
+  <app-sidebar [sideBarExpanded]="sideBarStatus"
+  [ngClass]="{'app-sidebar-open':sideBarStatus}"></app-sidebar>
+  <div class="display-area p-3" [ngClass]="{'display-area-shift':sideBarStatus}">
+    <!-- Main area Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga ex quo sequi nam eaque magnam aliquam sint asperiores? Ipsa optio expedita quam incidunt beatae velit iusto quis, sunt reiciendis molestiae? -->
+    <router-outlet></router-outlet>
+  </div>
+</main>

@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row">
+        <ng-container *ngIf="!loading; else loadingEmp">
+            <div class="col-md-4 mb-4" *ngFor="let employee of employeeList">
+                <div class="card">
+                    <img [src]="employee.picture" class="card-img-top" alt="Employee Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ employee.title }} {{ employee.firstName }} {{ employee.lastName }}
+                        </h5>
+                        <p class="card-text">ID: {{ employee.id }}</p>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #loadingEmp>
+            <p>Loading...</p>
+        </ng-template>
+    </div>
+</div>
+<!-- <div class="row">
+    <ng-container *ngIf="!loading; else loadingEmp">
+        {{employeeList | json}}
+    </ng-container>
+  <ng-template #loadingEmp>
+    <p>Loading...</p>
+  </ng-template>
+</div> -->
