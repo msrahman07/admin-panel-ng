@@ -1,1 +1,27 @@
-<p>customers works!</p>
+<div class="container">
+    <div class="emp-cus-page">
+        <div class="d-flex justify-content-between">
+            <h3>Current Customers</h3>
+            <button (click)="openModal()" class="btn btn-dark">Add New Customer</button>
+        </div>
+        <hr>
+    </div>
+
+    <div class="row">
+        <ng-container *ngIf="!loading; else loadingEmp">
+            <div class="col-md-4 mb-4" *ngFor="let customer of customerList">
+                <div class="card">
+                    <img [src]="customer.picture" class="card-img-top" alt="Customer Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ customer.firstName }} {{ customer.lastName }}
+                        </h5>
+                        <p class="card-text">Email: {{ customer.email }}</p>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #loadingEmp>
+            <p>Loading...</p>
+        </ng-template>
+    </div>
+</div>

@@ -12,14 +12,7 @@ body {
 .col-md-4.mb-4 {
     .card {
       padding: 5px;
-      img.card-img-top {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        overflow: hidden;
-        margin: 0 auto; /* Center the image horizontally */
-        object-fit: cover;
-      }
+      
   
       .card-body {
         text-align: center; /* Center the content within the card */
@@ -33,4 +26,12 @@ body {
         margin-top: 5px; /* Add space between title and ID */
       }
     }
+  }
+  img.card-img-top {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto; /* Center the image horizontally */
+    object-fit: cover;
   }

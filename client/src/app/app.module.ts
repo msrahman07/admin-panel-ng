@@ -10,6 +10,13 @@ import { HeaderComponent } from './header/header.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { CustomersComponent } from './customers/customers.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ModalComponent } from './shared/modal/modal.component';
+import { EmployeeFormComponent } from './employees/employee-form/employee-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AddEmployeeComponent } from './employees/add-employee/add-employee.component';
+import { EditEmployeeComponent } from './employees/edit-employee/edit-employee.component';
+import { StoreModule } from '@ngrx/store';
+import { employeeReducer } from './employees/store/employees.reducer';
 
 @NgModule({
   declarations: [
@@ -18,13 +25,19 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     HeaderComponent,
     EmployeesComponent,
     CustomersComponent,
-    DashboardComponent
+    DashboardComponent,
+    ModalComponent,
+    EmployeeFormComponent,
+    AddEmployeeComponent,
+    EditEmployeeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    StoreModule.forRoot({employees:employeeReducer})
   ],
   providers: [],
   bootstrap: [AppComponent]

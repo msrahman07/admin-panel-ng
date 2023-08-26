@@ -1,31 +1,26 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { Employee } from './employee';
-import { map, shareReplay } from 'rxjs';
+import { Employee } from './employee.interface';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class EmployeesService implements OnInit{
-  headers: HttpHeaders = new HttpHeaders()
-  .set('app-id','64e73706a4ae9c4d4bca04c1');
+export class EmployeesService implements OnInit {
+  // private employeeListSubject = new BehaviorSubject<Employee[]>([]);
+  getEmployees$ = this.http.get<Employee[]>('api/employee');
+  private alertMessageSubject = new BehaviorSubject<string | null>(null);
+  alertMessage$ = this.alertMessageSubject.asObservable();
 
-  getEmployees$ = this.http.get<any>('https://dummyapi.io/data/v1/user', {'headers':this.headers})
-  .pipe(
-    map(response => response['data']),
-    shareReplay(1),
-  );
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   ngOnInit(): void {
-    // throw new Error('Method not implemented.');
   }
 
-  getEmployees() {
-    return this.http.get<any>('https://dummyapi.io/data/v1/user', {'headers':this.headers})
-    .pipe(
-      map(response => response['data']),
-      shareReplay(1),
-    );
+  createEmployee(employeeFormData: FormData): Observable<Employee> {
+    return this.http.post<Employee>('api/employee', employeeFormData);
+  }
+
+  emitAlertMessage(message: string | null) {
+    this.alertMessageSubject.next(message);
   }
 }

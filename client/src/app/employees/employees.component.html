@@ -1,13 +1,29 @@
 <div class="container">
+        <ngb-alert *ngIf="alertMessage" type="success">{{
+            alertMessage }}
+        </ngb-alert>
+    <div class="emp-cus-page">
+        <div class="d-flex justify-content-between">
+            <h3>Current Employees</h3>
+            <button (click)="openModal()" class="btn btn-dark">Add New Empoyee</button>
+        </div>
+        <hr>
+    </div>
+
     <div class="row">
         <ng-container *ngIf="!loading; else loadingEmp">
-            <div class="col-md-4 mb-4" *ngFor="let employee of employeeList">
+            <div class="col-md-4 mb-4" *ngFor="let employee of employeeList$ | async">
                 <div class="card">
                     <img [src]="employee.picture" class="card-img-top" alt="Employee Image">
                     <div class="card-body">
-                        <h5 class="card-title">{{ employee.title }} {{ employee.firstName }} {{ employee.lastName }}
+                        <h5 class="card-title">{{ employee.firstName }} {{ employee.lastName }}
                         </h5>
-                        <p class="card-text">ID: {{ employee.id }}</p>
+                        <p class="card-text">Email: {{ employee.email }}</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-warning bi bi-pencil-square"
+                            (click)="openModalEdit(employee)"></button>
+                        <button class="btn btn-outline-danger bi bi-trash" (click)="openModalEdit(employee)"></button>
                     </div>
                 </div>
             </div>
@@ -17,11 +33,3 @@
         </ng-template>
     </div>
 </div>
-<!-- <div class="row">
-    <ng-container *ngIf="!loading; else loadingEmp">
-        {{employeeList | json}}
-    </ng-container>
-  <ng-template #loadingEmp>
-    <p>Loading...</p>
-  </ng-template>
-</div> -->
