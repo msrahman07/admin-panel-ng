@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Data;
@@ -57,12 +52,48 @@ namespace API.Controllers
         // PUT: api/Employee/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(string id, Employee employee)
+        public async Task<IActionResult> PutEmployee(string id, [FromForm] EmployeeCustomerPostReqDto employeeDto)
         {
-            if (id != employee.Id)
+            if (id != employeeDto.Id)
             {
                 return BadRequest();
             }
+            var employeeToEdit = await _context.Employees.FindAsync(id);
+
+            if (employeeToEdit == null) return BadRequest();
+
+            var photoUploadResult = new PhotoUploadResult
+            {
+                Url = "https://sp-ao.shortpixel.ai/client/to_auto,q_lossy,ret_img,w_1539,h_1069/https://h-o-m-e.org/wp-content/uploads/2022/04/Blank-Profile-Picture-1.jpg",
+                PublicId = null,
+            };
+
+            if (employeeDto.PictureFile != null)
+            {
+                if (employeeToEdit.PictureId != null)
+                {
+                    await _photoAccessor.DeletePhoto(employeeToEdit.PictureId);
+                }
+                photoUploadResult = await _photoAccessor.AddPhoto(employeeDto.PictureFile);
+            }
+            else
+            {
+                photoUploadResult.Url = employeeToEdit.Picture;
+                photoUploadResult.PublicId = employeeToEdit.PictureId;
+            }
+
+            _context.Entry(employeeToEdit).State = EntityState.Detached;
+
+
+            var employee = new Employee
+            {
+                Id = employeeDto.Id,
+                FirstName = employeeDto.FirstName,
+                LastName = employeeDto.LastName,
+                Email = employeeDto.Email,
+                Picture = photoUploadResult.Url,
+                PictureId = photoUploadResult.PublicId
+            };
 
             _context.Entry(employee).State = EntityState.Modified;
 
@@ -82,7 +113,7 @@ namespace API.Controllers
                 }
             }
 
-            return NoContent();
+            return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
         }
 
         // POST: api/Employee
@@ -94,15 +125,28 @@ namespace API.Controllers
             {
                 return Problem("Entity set 'DataContext.Employees'  is null.");
             }
+            var photoUploadResult = new PhotoUploadResult();
+            if (employeeDto.PictureFile != null)
+            {
+                photoUploadResult = await _photoAccessor.AddPhoto(employeeDto.PictureFile);
 
-            var photoUploadResult = await _photoAccessor.AddPhoto(employeeDto.PictureFile);
+            }
+            else
+            {
+                {
+                    photoUploadResult.Url = "https://sp-ao.shortpixel.ai/client/to_auto,q_lossy,ret_img,w_1539,h_1069/https://h-o-m-e.org/wp-content/uploads/2022/04/Blank-Profile-Picture-1.jpg";
+                    photoUploadResult.PublicId = null;
+                };
+            }
 
-            var employee = new Employee {
+            var employee = new Employee
+            {
                 Id = Guid.NewGuid().ToString(),
                 FirstName = employeeDto.FirstName,
                 LastName = employeeDto.LastName,
                 Email = employeeDto.Email,
-                Picture = photoUploadResult.Url
+                Picture = photoUploadResult.Url,
+                PictureId = photoUploadResult.PublicId
             };
 
             _context.Employees.Add(employee);
@@ -137,6 +181,10 @@ namespace API.Controllers
             if (employee == null)
             {
                 return NotFound();
+            }
+            if (employee.PictureId != null)
+            {
+                await _photoAccessor.DeletePhoto(employee.PictureId);
             }
 
             _context.Employees.Remove(employee);

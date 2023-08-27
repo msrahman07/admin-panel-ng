@@ -8,6 +8,7 @@ import { Store, select } from '@ngrx/store';
 import { loadEmployees } from './store/employees.actions';
 import { Observable } from 'rxjs';
 import { ModalDataService } from '../shared/modal-data.service';
+import { DeleteEmployeeComponent } from './delete-employee/delete-employee.component';
 
 @Component({
   selector: 'app-employees',
@@ -16,7 +17,6 @@ import { ModalDataService } from '../shared/modal-data.service';
 })
 export class EmployeesComponent implements OnInit {
   employeeList$: Observable<Employee[]> = new Observable();
-  alertMessage: string | null = null;
   
   loading: boolean = true;
 
@@ -44,13 +44,6 @@ export class EmployeesComponent implements OnInit {
         }
       });
 
-    this.employeeService.alertMessage$.subscribe((message) => {
-      if(message) {
-        this.alertMessage = message;
-        setTimeout(() => this.alertMessage =null, 2000);
-      }
-    })
-
     this.employeeList$ = this.store.select((state) => state.employees);
   }
 
@@ -66,5 +59,12 @@ export class EmployeesComponent implements OnInit {
     const modalRef = this.modalService.open(ModalComponent);
     modalRef.componentInstance.addDynamicComponent(EmployeeFormComponent);
     modalRef.componentInstance.title = 'Edit Employee';
+  }
+
+  openModalDelete(employee: Employee) {
+    this.modalDataService.setSelectedEmployee(employee);
+    const modalRef = this.modalService.open(ModalComponent);
+    modalRef.componentInstance.addDynamicComponent(DeleteEmployeeComponent);
+    // modalRef.componentInstance.title = 'Delete Employee';
   }
 }

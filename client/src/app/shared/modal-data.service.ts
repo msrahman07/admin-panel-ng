@@ -14,5 +14,6 @@ export class ModalDataService {
   getSelectedEmployee(): Observable<Employee | null> {
     return this.selectedEmployeeSubject.asObservable();
   }
+
   constructor() { }
 }

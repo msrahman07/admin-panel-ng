@@ -1,0 +1,12 @@
+<div>
+    Are you sure you want to delete this employee?
+</div>
+<br>
+<div class="modal-footer d-flex justify-content-between">
+    <button type="button" class="btn btn-outline-success" (click)="activeModal.close('Close click')">Cancel</button>
+
+    <button class="btn btn-outline-danger" [disabled]="loading" (click)="confirmDeletion()">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Confirm
+    </button>
+</div>

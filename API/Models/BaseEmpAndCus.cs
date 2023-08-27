@@ -10,5 +10,6 @@ namespace API.Models
         [EmailAddress]
         public string Email { get; set; } = null!;
         public string Picture { get; set; } = null!;
+        public string? PictureId { get; set; }
     }
 }

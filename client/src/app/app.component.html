@@ -1,5 +1,11 @@
 <app-header (sideNavToggled)="sideBarStatus = $event"></app-header>
-
+  <ngb-alert 
+  #selfClosingAlert
+  class="top-alert"
+  [animation]="true"
+  *ngIf="alertMessage" type={{alertMessage.type}}>{{
+      alertMessage.message }}
+  </ngb-alert>
 <main>
   <app-sidebar [sideBarExpanded]="sideBarStatus"
   [ngClass]="{'app-sidebar-open':sideBarStatus}"></app-sidebar>

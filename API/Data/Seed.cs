@@ -1,3 +1,4 @@
+using API.Enums;
 using API.Models;
 
 namespace API.Data
@@ -103,6 +104,45 @@ namespace API.Data
                 };
 
                 await context.Customers.AddRangeAsync(customers);
+                await context.SaveChangesAsync();
+            }
+
+            if (!context.Kanbans.Any())
+            {
+                var kanbans = new List<Kanban>
+                {
+                    new Kanban
+                    {
+                        Todo="Complete Employee feature",
+                        Priority=KanbanPriority.Low,
+                        Status=KanbanStatus.Completed
+                    },
+                    new Kanban
+                    {
+                        Todo="Complete Customer feature",
+                        Priority=KanbanPriority.Low,
+                        Status=KanbanStatus.Completed
+                    },
+                    new Kanban
+                    {
+                        Todo="Complete kanban feature",
+                        Priority=KanbanPriority.High,
+                        Status=KanbanStatus.InProgress
+                    },
+                    new Kanban
+                    {
+                        Todo="Start dashboard project",
+                        Priority=KanbanPriority.Moderate,
+                        Status=KanbanStatus.New
+                    },
+                    new Kanban
+                    {
+                        Todo="Complete Calander feature",
+                        Priority=KanbanPriority.High,
+                        Status=KanbanStatus.InProgress
+                    },
+                };
+                await context.Kanbans.AddRangeAsync(kanbans);
                 await context.SaveChangesAsync();
             }
         }

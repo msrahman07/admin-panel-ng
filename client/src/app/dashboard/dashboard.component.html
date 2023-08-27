@@ -1,1 +1,8 @@
-<p>dashboard works!</p>
+<div class="container">
+    <div class="box" draggable="true" (dragstart)="onDragStart($event)">
+        {{ name }}
+    </div>
+    <div class="box" (dragover)="onDragOver($event)" (drop)="onDrop($event)"></div>
+    <div class="box" (dragover)="onDragOver($event)" (drop)="onDrop($event)"></div>
+    <div class="box" (dragover)="onDragOver($event)" (drop)="onDrop($event)"></div>
+</div>

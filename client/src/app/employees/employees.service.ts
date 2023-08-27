@@ -9,9 +9,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 export class EmployeesService implements OnInit {
   // private employeeListSubject = new BehaviorSubject<Employee[]>([]);
   getEmployees$ = this.http.get<Employee[]>('api/employee');
-  private alertMessageSubject = new BehaviorSubject<string | null>(null);
-  alertMessage$ = this.alertMessageSubject.asObservable();
-
+  
   constructor(private http: HttpClient) {}
   ngOnInit(): void {
   }
@@ -20,7 +18,12 @@ export class EmployeesService implements OnInit {
     return this.http.post<Employee>('api/employee', employeeFormData);
   }
 
-  emitAlertMessage(message: string | null) {
-    this.alertMessageSubject.next(message);
+  updateEmployee(id  : string, employeeFormData: FormData) : Observable<Employee> {
+    return this.http.put<Employee>(`api/employee/${id}`, employeeFormData);
   }
+
+  deleteEmployee(id  : string) : Observable<Employee> {
+    return this.http.delete<Employee>(`api/employee/${id}`);
+  }
+
 }

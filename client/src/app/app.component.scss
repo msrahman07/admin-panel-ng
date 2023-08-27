@@ -1,57 +1,59 @@
 app-header {
-    position: fixed;
-    width: 100%;
-    top: 0px;
-    height: 4rem;
-    z-index: 2;
+  position: fixed;
+  width: 100%;
+  top: 0px;
+  height: 4rem;
+  z-index: 2;
+}
+.top-alert {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  z-index: 100;
+  // background-color: rgba(255, 255, 255, 0); /* Add transparency effect */
 }
 
 main {
+  position: absolute;
+  width: 100%;
+  top: 4rem;
+  z-index: 1;
+  height: calc(100vh - 4rem);
+
+  app-sidebar {
     position: absolute;
-    width: 100%;
-    top: 4rem;
-    z-index: 1;
-    height: calc(100vh - 4rem);
+    left: 0rem;
+    width: 60px;
+    height: 100%;
+    // height: calc(100vh - 4rem);
+    // height: 100vh;
+    box-shadow: 0 0 10px #00000080;
+    background-color: #222222;
+    border-top: 1px solid white;
+    overflow-x: hidden;
+    white-space: nowrap;
+    transition: width 400ms ease-in;
+  }
+  .app-sidebar-open {
+    width: 200px;
+    transition: width 400ms ease-out;
+  }
 
-    app-sidebar {
-        position: absolute;
-        left: 0rem;
-        width: 60px;
-        height: 100%;
-        // height: calc(100vh - 4rem);
-        // height: 100vh;
-        box-shadow: 0 0 10px #00000080;
-        background-color: #222222;
-        border-top: 1px solid white;
-        overflow-x: hidden;
-        white-space: nowrap;
-        transition: width 400ms ease-in;
-    }
-    .app-sidebar-open {
-        width: 200px;
-        transition: width 400ms ease-out;
-    }
-
-    .display-area {
-        position: absolute;
-        left: 60px;
-        width: calc(100% - 60px);
-        height: 100%; /* Match the sidebar's height */
-        overflow-y: auto;
-        transition: left 400ms ease-in, width 400ms ease-in;
-    }
-    .display-area-shift {
-        position: absolute;
-        left: 200px;
-        width: calc(100% - 250px);
-        height: 100%; /* Match the sidebar's height */
-        overflow-y: auto;
-        transition: left 400ms ease-out, width 400ms ease-out;
-    }
+  .display-area {
+    position: absolute;
+    left: 60px;
+    width: calc(100% - 60px);
+    height: 100%; /* Match the sidebar's height */
+    overflow-y: auto;
+    transition: left 400ms ease-in, width 400ms ease-in;
+  }
+  .display-area-shift {
+    position: absolute;
+    left: 200px;
+    width: calc(100% - 250px);
+    height: 100%; /* Match the sidebar's height */
+    overflow-y: auto;
+    transition: left 400ms ease-out, width 400ms ease-out;
+  }
 }
-
-
-
-
-
-

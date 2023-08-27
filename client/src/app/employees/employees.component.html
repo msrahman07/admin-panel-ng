@@ -1,7 +1,4 @@
 <div class="container">
-        <ngb-alert *ngIf="alertMessage" type="success">{{
-            alertMessage }}
-        </ngb-alert>
     <div class="emp-cus-page">
         <div class="d-flex justify-content-between">
             <h3>Current Employees</h3>
@@ -23,7 +20,7 @@
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-outline-warning bi bi-pencil-square"
                             (click)="openModalEdit(employee)"></button>
-                        <button class="btn btn-outline-danger bi bi-trash" (click)="openModalEdit(employee)"></button>
+                        <button class="btn btn-outline-danger bi bi-trash" (click)="openModalDelete(employee)"></button>
                     </div>
                 </div>
             </div>

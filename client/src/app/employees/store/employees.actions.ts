@@ -9,3 +9,11 @@ export const addNewEmployee = createAction(
   '[Employees Component] AddEmployee',
   props<{ employee: Employee }>()
 );
+export const deleteEmployee = createAction(
+  '[Employees Component] DeleteEmployee',
+  props<{ employee: Employee }>()
+);
+export const updateEmployee = createAction(
+  '[Employees Component] DeleteEmployee',
+  props<{ employee: Employee }>()
+);

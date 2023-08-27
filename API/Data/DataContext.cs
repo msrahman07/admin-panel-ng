@@ -11,6 +11,7 @@ public partial class DataContext : DbContext
     }
     public DbSet<Employee> Employees { get; set; } = default!;
     public DbSet<Customer> Customers { get; set; } = default!;
+    public DbSet<Kanban> Kanbans { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -19,3 +20,5 @@ public partial class DataContext : DbContext
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
+
+// dotnet aspnet-codegenerator controller -name KanbanController -async -api -m Kanban -dc API.Data.DataContext -outDir Controllers
