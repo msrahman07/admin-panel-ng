@@ -1,0 +1,19 @@
+// .container {
+//   overflow: hidden; /* Hide horizontal overflow */
+//   margin: 0;
+// }
+.scrollmenu {
+  display: flex; /* Display cards in a flex container */
+  overflow-x: scroll; /* Enable horizontal scrolling */
+  white-space: nowrap; /* Prevent cards from wrapping to the next line */
+  padding: 10px; /* Add some padding for space */
+//   max-width: 700px;
+}
+
+.card {
+  flex: 0 0 auto; /* Make cards not grow or shrink */
+  max-width: fit-content;
+  padding: 10px;
+  text-align: center;
+  margin-right: 10px; /* Add some spacing between cards */
+}

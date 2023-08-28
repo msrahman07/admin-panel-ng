@@ -1,6 +1,5 @@
 import { Component, Input, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CustomersComponent } from 'src/app/customers/customers.component';
 
 @Component({
   selector: 'app-modal',

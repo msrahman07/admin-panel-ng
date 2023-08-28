@@ -23,13 +23,15 @@ import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { KanbanComponent } from './kanban/kanban.component';
 import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { PeopleComponent } from './dashboard/people/people.component';
+import { AddKanbanTodoComponent } from './kanban/add-kanban-todo/add-kanban-todo.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SidebarComponent,
     HeaderComponent,
+    SidebarComponent,
     EmployeesComponent,
     CustomersComponent,
     DashboardComponent,
@@ -38,6 +40,8 @@ import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
     DeleteEmployeeComponent,
     CalendarComponent,
     KanbanComponent,
+    PeopleComponent,
+    AddKanbanTodoComponent,
   ],
   imports: [
     CommonModule,
@@ -52,7 +56,7 @@ import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
     CdkDropList, CdkDrag,
     StoreModule.forRoot({employees:employeeReducer}),
     FlatpickrModule.forRoot(),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [],
   bootstrap: [AppComponent]

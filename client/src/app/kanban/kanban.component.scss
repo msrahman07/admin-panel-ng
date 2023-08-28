@@ -72,26 +72,6 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.example-box:last-child {
-  // border: none;
-}
-
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-
-.custom-radio {
-  display: flex;
-  align-items: center;
-  margin-left: 3rem;
-  margin-right: 15px; /* Add some spacing between radio buttons */
-}
-
-.radio-inline {
-  display: flex;
-}
-
-.custom-radio .form-check-input {
-  margin-right: 5px; /* Add some spacing between input and text */
-}
-

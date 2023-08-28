@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Employee } from './employee.interface';
 import { EmployeesService } from './employees.service';
-import { NgbAlert, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../shared/modal/modal.component';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { Store, select } from '@ngrx/store';

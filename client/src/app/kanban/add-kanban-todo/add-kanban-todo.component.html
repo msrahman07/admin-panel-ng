@@ -1,0 +1,23 @@
+<form [formGroup]="todoForm" (ngSubmit)="addTodo()">
+    <div class="mb-3">
+      <label for="todoInput" class="form-label">Todo Item</label>
+      <input type="text" id="todoInput" class="form-control" formControlName="todo">
+    </div>
+    <div class="mb-3 form-check form-check-inline">
+      <label class="form-check-label">Priority:</label>
+      <label class="form-check-label custom-radio">
+        <input type="radio" class="form-check-input" value="0" formControlName="priority">
+        Low
+      </label>
+      <label class="form-check-label custom-radio">
+        <input type="radio" class="form-check-input" value="1" formControlName="priority">
+        Moderate
+      </label>
+      <label class="form-check-label custom-radio">
+        <input type="radio" class="form-check-input" value="2" formControlName="priority">
+        High
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm" [disabled]="!todoForm.valid">Add Todo</button>
+  </form>
+  

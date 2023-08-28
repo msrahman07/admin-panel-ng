@@ -1,15 +1,16 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CustomersService } from './customers.service';
 
-describe('CustomersService', () => {
-  let service: CustomersService;
+import { KanbanDataService } from './kanban-data.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
+describe('KanbanDataService', () => {
+  let service: KanbanDataService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports:[HttpClientTestingModule],
+      imports: [HttpClientTestingModule],
     });
-    service = TestBed.inject(CustomersService);
+    service = TestBed.inject(KanbanDataService);
   });
 
   it('should be created', () => {

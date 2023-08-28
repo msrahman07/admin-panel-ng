@@ -1,31 +1,11 @@
-<form [formGroup]="todoForm" (ngSubmit)="addTodo()">
-  <div class="mb-3">
-    <label for="todoInput" class="form-label">Todo Item</label>
-    <input type="text" id="todoInput" class="form-control" formControlName="todo">
-  </div>
-  <div class="mb-3 form-check form-check-inline">
-    <label class="form-check-label">Priority:</label>
-    <label class="form-check-label custom-radio">
-      <input type="radio" class="form-check-input" value="0" formControlName="priority">
-      Low
-    </label>
-    <label class="form-check-label custom-radio">
-      <input type="radio" class="form-check-input" value="1" formControlName="priority">
-      Moderate
-    </label>
-    <label class="form-check-label custom-radio">
-      <input type="radio" class="form-check-input" value="2" formControlName="priority">
-      High
-    </label>
-  </div>
-  <button type="submit" class="btn btn-primary btn-sm" [disabled]="!todoForm.valid">Add Todo</button>
-</form>
-
+<ng-container *ngIf="showAddTodoForm">
+  <app-add-kanban-todo (formSubmit)="addTodoFormSubmit($event)"></app-add-kanban-todo>
+</ng-container>
 <div class="row">
   <div class="example-container col- col-sm">
     <h2>To do</h2>
 
-    <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
+    <div cdkDropList [id]="'todoList'" #todoList="cdkDropList" [cdkDropListData]="todo"
       [cdkDropListConnectedTo]="[doneList, inProgressList]" class="example-list" (cdkDropListDropped)="drop($event)">
       <div class="example-box" *ngFor="let item of todo" cdkDrag>
         <span class="new todo">
@@ -39,8 +19,8 @@
   <div class="example-container col- col-sm">
     <h2>In Progress</h2>
 
-    <div cdkDropList #inProgressList="cdkDropList" [cdkDropListData]="inProgress"
-      [cdkDropListConnectedTo]="[doneList, todoList]" class="example-list" (cdkDropListDropped)="drop($event)">
+    <div cdkDropList [id]="'inProgressList'" #inProgressList="cdkDropList" [cdkDropListData]="inProgress"
+      [cdkDropListConnectedTo]="[doneList, todoList]" class="example-list" (cdkDropListDropped)="drop($event)" >
       <div class="example-box" *ngFor="let item of inProgress" cdkDrag>
         <span class="inprogress todo">
           {{item.todo}}
@@ -53,7 +33,7 @@
   <div class="example-container col- col-sm">
     <h2>Done</h2>
 
-    <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
+    <div cdkDropList [id]="'doneList'" #doneList="cdkDropList" [cdkDropListData]="done"
       [cdkDropListConnectedTo]="[todoList, inProgressList]" class="example-list" (cdkDropListDropped)="drop($event)">
       <div class="example-box" *ngFor="let item of done" cdkDrag>
         <span class="done todo">

@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="scrollmenu">
+        <div *ngFor="let person of people">
+            <div class="card d-flex">
+                <img class="card-img-top"
+                    [src]="person.picture"
+                    alt="Card image cap">
+                <h4 class="card-title">{{person.firstName}} {{person.lastName}}</h4>
+                <h5 class="card-title">Email: {{person.email}}</h5>
+            </div>
+        </div>        
+    </div>
+</div>

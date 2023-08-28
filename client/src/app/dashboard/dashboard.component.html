@@ -1,8 +1,34 @@
+<a routerLink="/kanban">
+    <h1>Kanban</h1>
+</a>
+<hr>
 <div class="container">
-    <div class="box" draggable="true" (dragstart)="onDragStart($event)">
-        {{ name }}
-    </div>
-    <div class="box" (dragover)="onDragOver($event)" (drop)="onDrop($event)"></div>
-    <div class="box" (dragover)="onDragOver($event)" (drop)="onDrop($event)"></div>
-    <div class="box" (dragover)="onDragOver($event)" (drop)="onDrop($event)"></div>
+    <app-kanban [showAddTodoForm]="false"></app-kanban>
 </div>
+<hr>
+
+<a routerLink="/customers">
+    <h1>My Employees</h1>
+</a>
+<hr>
+
+<!-- <app-people></app-people> -->
+<ng-container *ngIf="!loadingEmployees; else loadingEmp">    
+    <app-people [people]="(employeeList$ | async) || []"></app-people>    
+    <br>
+</ng-container>
+<br>
+<hr>
+
+<a routerLink="/customers">
+    <h1>My Customers</h1>
+</a>
+<hr>
+<ng-container *ngIf="!loadingCustomer; else loadingEmp">    
+    <app-people [people]="customerList"></app-people>    
+    <br>
+</ng-container>
+
+<ng-template #loadingEmp>
+    <p>Loading...</p>
+</ng-template>

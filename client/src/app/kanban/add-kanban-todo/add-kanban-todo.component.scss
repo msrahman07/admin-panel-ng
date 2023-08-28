@@ -1,0 +1,14 @@
+.custom-radio {
+  display: flex;
+  align-items: center;
+  margin-left: 3rem;
+  margin-right: 15px; /* Add some spacing between radio buttons */
+}
+
+.radio-inline {
+  display: flex;
+}
+
+.custom-radio .form-check-input {
+  margin-right: 5px; /* Add some spacing between input and text */
+}

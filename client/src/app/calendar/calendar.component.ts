@@ -23,6 +23,7 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
+import { CalendarDatePipe } from 'angular-calendar/modules/common/calendar-date/calendar-date.pipe';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -64,7 +65,7 @@ export class CalendarComponent {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
       a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
+        // this.handleEvent('Edited', event);
       },
     },
     {
@@ -72,7 +73,7 @@ export class CalendarComponent {
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
+        // this.handleEvent('Deleted', event);
       },
     },
   ];
@@ -136,6 +137,7 @@ export class CalendarComponent {
       }
       this.viewDate = date;
     }
+    console.log(date);
   }
 
   eventTimesChanged({
@@ -157,8 +159,8 @@ export class CalendarComponent {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+    // this.modalData = { event, action };
+    // this.modal.open(this.modalContent, { size: 'lg' });
   }
 
   addEvent(): void {

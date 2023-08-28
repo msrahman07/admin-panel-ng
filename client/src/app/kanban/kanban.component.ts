@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
-  CdkDrag,
-  CdkDropList,
 } from '@angular/cdk/drag-drop';
-import { JsonPipe } from '@angular/common';
 import { KanbanItem } from './kanban-item.interface';
 import { KanbanService } from './kanban.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { AlertMessageService } from '../shared/alert-message.service';
+import { KanbanDataService } from './kanban-data.service';
 
 @Component({
   selector: 'app-kanban',
@@ -17,17 +16,27 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./kanban.component.scss'],
 })
 export class KanbanComponent implements OnInit {
-  todoForm!: FormGroup;
-  
-  constructor(private fb: FormBuilder, private kanbanService: KanbanService) {
-    this.todoForm = this.fb.group({
-      todo: ['', Validators.required],
-      priority: ['0', Validators.required]
-    });
-  }
+  @Input() showAddTodoForm: boolean = true;
+
+  todo: KanbanItem[] = [];
+  inProgress: KanbanItem[] = [];
+  done: KanbanItem[] = [];
+
+  todoStatusMap: { [key: string]: number } = {
+    todoList: 0,
+    inProgressList: 1,
+    doneList: 2,
+  };
+
+  constructor(
+    private fb: FormBuilder,
+    private kanbanService: KanbanService,
+    private kanbanDataService: KanbanDataService,
+    private alertMessageService: AlertMessageService
+  ) {}
 
   ngOnInit(): void {
-    this.kanbanService.getKanbanItems$.subscribe((kanbanItems) => {
+    this.kanbanDataService.kanbanItems$.subscribe((kanbanItems) => {
       this.todo = [];
       this.inProgress = [];
       this.done = [];
@@ -41,19 +50,15 @@ export class KanbanComponent implements OnInit {
           this.done.push(item);
         }
       });
+      // this.todo.sort((a, b) => b.priority - a.priority);
+      // this.inProgress.sort((a, b) => b.priority - a.priority);
+      // this.done.sort((a, b) => b.priority - a.priority);
     });
   }
 
-  todo: KanbanItem[] = [];
-  inProgress: KanbanItem[] = [];
-  done: KanbanItem[] = [];
-
   drop(event: CdkDragDrop<KanbanItem[]>) {
-    // console.log('prev container: '+event.previousContainer.data);
-    // console.log(event.previousContainer.data[event.previousIndex]+' moved from '+event.previousContainer.id+' to '+event.container.id);
-    // console.log(event.previousContainer.data[event.previousIndex]+' moved from '+event.previousContainer.id+' to '+event.container.removeItem(event.item as CdkDrag));
-    console.log(event.item as CdkDrag);
-
+    // console.log(event.previousContainer.data[event.previousIndex].id+' moved from '+event.previousContainer.id+' to '+event.container.id);
+    // console.log(todoItem.id! +' moved to '+changedStatus);
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -67,28 +72,73 @@ export class KanbanComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
+      const todoItem = event.container.data[event.currentIndex];
+      const changedStatus = this.todoStatusMap[event.container.id];
+      this.updateTodoStatus(todoItem, changedStatus);
+      // event.container.data.sort((a, b) => b.priority - a.priority);
     }
   }
 
-  addTodo() {
-    if (this.todoForm.valid) {
-      const newItem: KanbanItem = {
-        todo: this.todoForm.get('todo')!.value,
-        priority: +this.todoForm.get('priority')!.value,
-        status: 0 // Assuming status 0 for new todos
-      };
+  updateTodoStatus(item: KanbanItem, status: number) {
+    item.status = status;
+    this.kanbanService.updateKanban(item.id!, item).subscribe({
+      next: (message) => {
+        // console.log(message);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 
-      this.todo.push(newItem);
-      this.todoForm.reset();
+  addTodoFormSubmit(todoForm: FormGroup) {
+    // console.log(todoForm)
+    // console.log(todoForm.valid)
+    if (todoForm.valid) {
+      const newItem: KanbanItem = {
+        todo: todoForm.get('todo')!.value,
+        priority: +todoForm.get('priority')!.value,
+        status: 0, // Assuming status 0 for new todos
+      };
+      this.kanbanService.addTodoItem(newItem).subscribe({
+        next: (item: KanbanItem) => {
+          this.alertMessageService.emitAlertMessage({
+            message: 'Added todo item',
+            type: 'success',
+          });
+          this.todo.push(item);
+        },
+        error: (err) => {
+          this.alertMessageService.emitAlertMessage({
+            message: 'Problem adding todo item',
+            type: 'danger',
+          });
+        },
+      });
+      todoForm.reset();
     }
   }
 
   deleteTodo(itemId: number) {
-    const index = this.done.findIndex((item) => item.id === itemId);
+    this.kanbanService.deleteTodoItem(itemId).subscribe({
+      next: (message) => {
+        const index = this.done.findIndex((item) => item.id === itemId);
 
-    if (index !== -1) {
-      this.done.splice(index, 1);
-    }
+        if (index !== -1) {
+          this.done.splice(index, 1);
+        }
+        this.alertMessageService.emitAlertMessage({
+          message: 'Todo item deleted',
+          type: 'success',
+        });
+      },
+      error: (err) => {
+        this.alertMessageService.emitAlertMessage({
+          message: 'Unable to deleted',
+          type: 'danger',
+        });
+      },
+    });
   }
 
   getPriorityText(priority: number): string {

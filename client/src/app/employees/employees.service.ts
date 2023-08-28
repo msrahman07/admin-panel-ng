@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Employee } from './employee.interface';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -25,5 +25,4 @@ export class EmployeesService implements OnInit {
   deleteEmployee(id  : string) : Observable<Employee> {
     return this.http.delete<Employee>(`api/employee/${id}`);
   }
-
 }

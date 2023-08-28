@@ -9,7 +9,6 @@ import { AlertMessage } from './shared/alert-message.interface';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'client';
   sideBarStatus: boolean = false;
   alertMessage: AlertMessage | null = null;
 
