@@ -43,13 +43,15 @@ export class DeleteEmployeeComponent implements OnInit {
           this.alertMessageService.emitAlertMessage({
             message: 'Employee deleted successfully',
             type: 'success',
-          })
+          });
+          this.activeModal.close();
         },
         error: (e) => {
           this.alertMessageService.emitAlertMessage({
             message: 'Problem occured while deleting employee'+e.message,
             type: 'danger',
           })
+          this.loading = false;
         },
         complete: () => {
           this.loading = false;
@@ -60,6 +62,5 @@ export class DeleteEmployeeComponent implements OnInit {
       //   console.log('Deleted employee');
       // }
     );
-    this.activeModal.close();
   }
 }

@@ -110,7 +110,7 @@ export class KanbanComponent implements OnInit {
         },
         error: (err) => {
           this.alertMessageService.emitAlertMessage({
-            message: 'Problem adding todo item',
+            message: 'Problem adding todo item'+err,
             type: 'danger',
           });
         },

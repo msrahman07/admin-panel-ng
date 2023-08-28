@@ -11,6 +11,7 @@ export class KanbanService {
   constructor(private http : HttpClient) {}
 
   getKanbanItems$ = this.http.get<KanbanItem[]>('api/kanban');
+  // getKanbanItems$ = this.http.get<KanbanItem[]>('https://shahriarrahman183.bsite.net/api/kanban');
   todoStatusMap: { [key: string]: number } = {
     'cdk-drop-list-0': 0,
     'cdk-drop-list-1': 1,

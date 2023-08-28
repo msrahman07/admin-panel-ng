@@ -7,6 +7,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { KanbanComponent } from './kanban/kanban.component';
 
 const routes: Routes = [
+  {path: '', component: DashboardComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'employees', component: EmployeesComponent},
   {path: 'customers', component: CustomersComponent},

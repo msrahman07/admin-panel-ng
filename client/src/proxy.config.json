@@ -1,6 +1,7 @@
 {
     "/api": {
-        "target": "http://localhost:5000",
-        "secure": false
+        "target": "https://shahriarrahman183.bsite.net",
+        "secure": true,
+        "changeOrigin": true
     }
 }
